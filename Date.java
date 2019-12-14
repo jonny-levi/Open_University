@@ -1,8 +1,8 @@
 /**
- * Matala 12 - Using a class to represent a given date in the Gregorian Calendar
+ * Matala 12 - This class represents a Date object
  *
  * @author Jonathan Levi
- * @version 2019
+ * @version (2020a)
  */
 public class Date {
     private int _day; //num between 1-31 only
@@ -35,6 +35,7 @@ public class Date {
     private final int _NOV = 11;
     private final int _DEC = 12;
 
+    //End months days
     private final int _28DAYS = 28; // in a common year _FEB
     private final int _29DAYS = 29; // in a leap year _FEB
     private final int _30DAYS = 30; // _APR, _JUN, _SEP, _NOV
@@ -46,12 +47,12 @@ public class Date {
      * creates a new Date object
      *
      * @param day   the day in the month(1-31)
-     * @param month the month in the year
+     * @param month the month in the year(1-12)
      * @param year  the year (in 4 digits)
      * creates a new Date object if the date is valid, otherwise creates the date 1/1/2000
      */
     public Date(int day, int month, int year) {
-        final boolean _MONTHS_WITH_30DAYS = ((month == _APR) || (month == _JUN) || (month == _SEP) || (month == _NOV)) && (day <= _30DAYS);
+        final boolean _MONTHS_WITH_30DAYS = ((month == _APR) || (month == _JUN) || (month == _SEP) || (month == _NOV)) && ( day <= _30DAYS);
         final boolean _MONTHS_WITH_31DAYS = (month == _JAN) || (month == _MAR) || (month == _MAY) || (month == _JUL) || (month == _AUG) || (month == _OCT) || (month == _DEC);
         if (day < ONE || day > _31DAYS || month < ONE || month > _DEC || year < _START_YEAR || year > _END_YEAR) {
             day = _DAY;
@@ -117,6 +118,7 @@ public class Date {
 
     /**
      * leap year calculator method
+     * @return true if it is a leap year
      */
     private boolean leapYear() {
         if (((_year % 4 == ZERO) && (_year % 100 != ZERO) || (_year % 400 == ZERO)) && (_year <= _END_YEAR) && (_year >= _START_YEAR)) {
@@ -127,6 +129,7 @@ public class Date {
 
     /**
      * gets the Day
+     * @return the day
      */
     public int getDay() {
         return _day;
@@ -134,6 +137,7 @@ public class Date {
 
     /**
      * gets the month
+     * @return the month
      */
     public int getMonth() {
         return _month;
@@ -141,14 +145,14 @@ public class Date {
 
     /**
      * gets the year
+     * @return the year
      */
     public int getYear() {
         return _year;
     }
 
     /**
-     * sets the day
-     *
+     * sets the day (only if date remains valid)
      * @param dayToSet refers to the day to be set
      */
     public void setDay(int dayToSet) {
@@ -172,7 +176,7 @@ public class Date {
     }
 
     /**
-     * set the month
+     * set the month (only if date remains valid)
      *
      * @param monthToSet refers to the month to be set
      */
@@ -198,7 +202,7 @@ public class Date {
     }
 
     /**
-     * sets the year
+     * sets the year (only if date remains valid)
      *
      * @param yearToSet refers to the year to be set
      */
@@ -225,9 +229,9 @@ public class Date {
     }
 
     /**
-     * equals calculator method
+     * check if 2 dates are the same
      * 
-     * @param a_date the given date
+     * @param other the given date
      * @return true if this equals other date
      */
     public boolean equals(Date other) {
@@ -238,6 +242,7 @@ public class Date {
      * check if this date is before other date
      *
      * @param other the given date
+     * @return true if this before other date
      * 
      */
     public boolean before(Date other) {
@@ -247,9 +252,8 @@ public class Date {
     /**
      * after calculator method
      * check if this date is after other date
-     * @param a_date the given date
-     * 
-     * 
+     * @param other the given date
+     * @return true if this after other date 
      */
     public boolean after(Date other) {
         return !before(other) && (_day != other._day && _month != other._month && _year != other._year);
@@ -258,8 +262,7 @@ public class Date {
     /**
      * difference calculator method
      * to calculate the different days between two given dates
-     * 
-     * 
+     * @Param other the given date
      * @return the difference between dates in days.
      */
     public int difference(Date other) {
@@ -269,6 +272,7 @@ public class Date {
     /**
      * tomorrow calculator method
      * to calculate the tomorrow date.
+     * @return the tomorrow date 
      */
     public Date tomorrow() {
         if (leapYear()) {
@@ -296,6 +300,12 @@ public class Date {
         }
     }
 
+    /**
+     * this method is to defference method use.
+     * @param day   the day in the month(1-31)
+     * @param month the month in the year(1-12)
+     * @param year  the year (in 4 digits)
+     */
     private int calculateDate(int day, int month, int year) {
         if (month < 3) {
             year--;
@@ -305,7 +315,7 @@ public class Date {
     }
 
     /**
-     * returns a String that represents this date
+     * @return a String that represents this date
      * in the following format:
      * day.month.year (01/01/2000)
      */
@@ -325,7 +335,7 @@ public class Date {
     }
 
     /**
-     * dayInWeek calculator method
+     * calculate the day of the week that this date occurs on 0-Saturday 1-Sunday 2-Monday etc.
      * 
      * @return number that represents the day in the week
      */
