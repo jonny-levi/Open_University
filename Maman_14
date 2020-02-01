@@ -1,0 +1,126 @@
+public class Ex14 extends Tester {
+    static int counter = 0;
+    static int temp = 0;
+    static int i = 0;
+    static int two = 0;
+    static String tempC = "";
+    static int counterC = 0;
+    static int totalC = 0;
+    static int counterD = 0;
+    static int counterE = 0;
+
+    public static int subStrC(String s, char c) {
+        if (s != null) { //if the string isn't null.
+            for (i = 0; i < s.length(); i++) {
+
+                if (s.charAt(i) == c) {
+                    counter++;// count every time that meeting c character.
+                }
+                if (counter == 2 && s.charAt(i) == c) {
+                    two = i;//two variable is save the index of the current i.
+                }
+                if (counter == 3) {
+                    temp++;// increment every sub strings.
+                    counter = 0; //resets the counter to 0.
+                    //  s = s.substring(two);
+                    i = two - 1;//need to get the two -1 so he wont miss counting c in index 0.
+
+                }
+            }
+        }
+        return temp;
+    }
+
+
+
+    public static int subStrMaxC(String s, char c, int k) {
+        tempC = s;//copy of the string s.
+        k = k + 2;// + 2 counting the start c and the end c and cover the case that k = 0
+        if (s != null) { // if the string isn't null
+            for (int j = 0; j < tempC.length(); j++) {
+                if (tempC.charAt(j) == c) {
+                    counterC++;
+                }
+                if (counterC == 2 && k == 2 && j == tempC.length() - 1) {//if k = 0 and there is only 2 c in the string
+                    totalC++;
+                }
+                if (counterC < 2) {
+                    totalC = 0;
+                }
+                if (counterC > 2 && counterC <= k) {
+                    totalC++;
+                }
+            }
+        }
+        return totalC;
+    }
+
+    public static void zeroDistance(int[] a) {
+        for (int h = 0; h < a.length; h++) {
+            if (a[h] == 0) {
+                counterD = 0;
+                counterD++;
+            }
+            if (a[h] != 0) {
+                a[h] = counterD;
+                counterD++;
+            }
+        }
+        for (int p = a.length - 1; p > 0; p--) {
+            if (a[p] == 0) {
+                counterD = 0;
+                counterD++;
+            }
+            if (a[p] != 0 && counterD < a[p]) {
+                a[p] = counterD;
+                counterD++;
+            }
+        }
+    }
+
+    public static boolean isTrans(String s, String t) {
+
+        if (s != null && t != null) {
+            if (s.equals(t)) {
+                return true;
+            }
+            if (s.length() == 0 && t.length() == 0) {
+                return true;
+            }
+            if (s.length() == 0 || t.length() == 0) {
+                return false;
+
+            }
+            if (s.charAt(0) != t.charAt(0)) {
+                return false;
+            }
+        }
+        return isTrans(s.substring(1), t.substring(1)) || isTrans(s, t.substring(1));
+
+    }
+
+    public static int countPaths(int[][] mat) {
+        return countPaths(mat, 0, 0, mat.length - 1, mat[0].length - 1);
+
+    }
+
+    private static int countPaths(int[][] mat, int x, int y, int x2, int y2) {
+        if (!borderOk(mat, x, y))
+            return 0;
+
+        if (x == x2 && y == y2) {
+            return 1;
+        }
+        counterE = countPaths(mat, x + (mat[x][y] / 10), y + (mat[x][y] % 10), x2, y2);
+        return counterE;
+
+    }
+
+    private static boolean borderOk(int[][] mat, int x, int y) {
+        if (x < 0 || x >= mat.length || y < 0 || y >= mat[0].length || mat[x][y] < 0 || mat[x][y] > 100)
+            return false;
+        return true;
+    }
+
+
+}
